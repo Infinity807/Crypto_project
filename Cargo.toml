@@ -1,0 +1,32 @@
+[package]
+name = "final_proj"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+base64 = "0.21"
+chrono = "0.4"
+ed25519-dalek = "2.0"
+log = "0.4"
+simple_logger = "4.2"
+tungstenite = { version = "0.20", features = ["native-tls"] }
+kryptonite = { path = "/Users/anant/Downloads/usual_hft/hft/kryptonite", features = ["native-tls"] }
+url = "2.4"
+serde_json = "1.0"
+jsonic = "0.2"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+
+
+[profile.release]
+opt-level = 3                 # Maximum optimization
+lto = "fat"                   # Enable full Link Time Optimization
+codegen-units = 1            # Optimize across entire program
+panic = "abort"              # Remove panic unwinding overhead
+debug = false                # Remove debug symbols
+incremental = false          # Disable incremental compilation
+
+[build]
+rustflags = [
+    "-C", "target-cpu=native",      # Optimize for your specific CPU
+    "-C", "target-feature=+sse,+sse2,+sse3,+ssse3,+sse4.1,+sse4.2,+avx,+avx2", # Enable SIMD
+]
